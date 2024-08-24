@@ -14,6 +14,8 @@ class Patient extends Model
         'last_name',
         'dob',
         'group',
-        'epic_fhir_id'
+        'epic_fhir_id',
+        'waiting_time',
+        'consultation_date'
     ];
 }

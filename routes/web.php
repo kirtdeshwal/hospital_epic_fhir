@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/patients/upload-patients', [PatientController::class, 'upload_patients'])->name('patients.upload');
     Route::get('/patients/get-epic-access-token', [PatientController::class, 'create_epic_oauth']);
     Route::get('/patients/epic-patient/{id}', [PatientController::class, 'getEpicPatient'])->name('patients.epic-patient');
+    Route::get('/patients/procedures/{id}', [PatientController::class, 'patientProcedures'])->name('patients.procedures');
+    Route::get('/patients/procedure/{id}', [PatientController::class, 'getProcedure'])->name('patients.procedure');
 });
 
 Route::get('/patients/epic-oauth', [PatientController::class, 'epic_oauth']);

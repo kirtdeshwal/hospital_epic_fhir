@@ -27,6 +27,7 @@
                             <div class="col-auto">
                                 <form action="" method="GET">
                                     <div class="row">
+                                        <div class="col-auto"><input type="text" name="datetimes" value="{{ Request::get('datetimes') }}" class="form-control"></div>
                                         <div class="col-auto"><input type="text" name="search_patient" value="{{ Request::get('search_patient') }}" class="form-control" placeholder="Search Patient"></div>
                                         <div class="col-auto"><input type="text" name="search_group" value="{{ Request::get('search_group') }}" class="form-control" placeholder="Search Group"></div>
                                         <div class="col-auto"><button type="submit" class="btn btn-primary">Search</button></div>
@@ -36,13 +37,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="p-4">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Date of Birth</th>
+                                <th>Consultation Date</th>
+                                <th>Consultation Time</th>
+                                <th>Waiting Time</th>
                                 <th>Group</th>
                                 <th>Epic ID</th>
                             </tr>
@@ -53,6 +57,9 @@
                                 <td>{{ $patient->first_name }}</td>
                                 <td>{{ $patient->last_name }}</td>
                                 <td>{{ date('m-d-Y', strtotime($patient->dob)) }}</td>
+                                <td>{{ date('m-d-Y', strtotime($patient->consultation_date)) }} </td>
+                                <td>{{ date('H:i A', strtotime($patient->consultation_date)) }} </td>
+                                <td>{{ $patient->waiting_time }} minutes</td>
                                 <td>{{ $patient->group }}</td>
                                 <td>
                                     {{ $patient->epic_fhir_id }} 
@@ -99,3 +106,17 @@
 
 </x-app-layout>
 
+<script>
+    $(document).ready(function() {
+        $(function() {
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                format: 'YYYY/MM/DD hh:mm A'
+                }
+            });
+        });
+    })
+</script>
